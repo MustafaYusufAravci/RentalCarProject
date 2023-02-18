@@ -3,6 +3,7 @@ package com.saferent.controller;
 import com.saferent.domain.ContactMessage;
 import com.saferent.dto.ContactMessageDTO;
 import com.saferent.dto.request.ContactMessageRequest;
+import com.saferent.dto.response.ResponseMessage;
 import com.saferent.dto.response.SfResponse;
 import com.saferent.mapper.ContactMessageMapper;
 import com.saferent.service.*;
@@ -95,6 +96,39 @@ public class ContactMessageController {
 
     }
 
+    //!!! Delete işlemi
+    @DeleteMapping("/{id}")
+    public ResponseEntity<SfResponse> deleteContactMessage(@PathVariable Long id){
+        contactMessageService.deleteContactMessage(id);
+
+        SfResponse sfResponse = new SfResponse(ResponseMessage.CONTACTMESSAGE_DELETE_RESPONSE,true);
+
+        return ResponseEntity.ok(sfResponse);
+    }
+
+    //!!! update
+    @PutMapping("/{id}")
+    public ResponseEntity<SfResponse> updateContactMessage(@PathVariable Long id,
+                                                           @Valid @RequestBody ContactMessageRequest contactMessageRequest){
+        ContactMessage contactMessage =
+                       contactMessageMapper.contactMessageRequestToContactMessage(contactMessageRequest);
+        contactMessageService.updateContactMessage(id,contactMessage);
+
+        SfResponse sfResponse =
+                new SfResponse(ResponseMessage.CONTACTMESSAGE_UPDATE_RESPONSE,true);
+
+        return ResponseEntity.ok(sfResponse);
+    }
+
+
+
+
+
+
+
+
+
+
 
     //!!! getPageDTO
     private Page<ContactMessageDTO> getPageDTO(Page<ContactMessage> contactMessagePage){
@@ -103,6 +137,7 @@ public class ContactMessageController {
                 contactMessage -> contactMessageMapper.contactMessageToDTO(contactMessage));
 
     }
+
 
 
 
