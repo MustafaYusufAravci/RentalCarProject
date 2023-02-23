@@ -1,21 +1,23 @@
 package com.saferent.exception.message;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.http.HttpStatus;
+import com.fasterxml.jackson.annotation.*;
+import org.springframework.http.*;
 
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class ApiResponseError {
+    // AMACIM : custom error mesajlarının ana soblonunu ouşturmak
 
-    // AMACIM : customer error mesajlarinin ana sablonu olusturmak
+
+
     private HttpStatus status;
 
-    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "dd-MM-yyy HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime timestamp;
 
     private String message;
 
-    private String requestURI;
+    private String requestURI ;
 
     // Const
 
@@ -24,20 +26,21 @@ public class ApiResponseError {
     }
 
     public ApiResponseError(HttpStatus status){
-        this(); // yukardaki parametresiz private const. cagriliyor
+        this(); // yukardaki parametresiz private const. çağırılıyor
         this.message="Unexpected Error";
-        this.status = status;
+        this.status = status ;
+
     }
 
-    public ApiResponseError(HttpStatus status, String message, String requestURI){
-        this(status); // yukardaki 1 parametreli, public const. cagriliyor
+    public ApiResponseError(HttpStatus status, String message, String requestURI) {
+        this(status); // yukardaki 1 parametreli, public const. çağrılıyor
         this.message = message;
         this.requestURI = requestURI;
     }
 
 
 
-    // Getter - Setter
+    // GETTER -SETTER
 
 
     public HttpStatus getStatus() {
@@ -67,5 +70,4 @@ public class ApiResponseError {
     public void setRequestURI(String requestURI) {
         this.requestURI = requestURI;
     }
-
 }

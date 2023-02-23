@@ -1,14 +1,13 @@
 package com.saferent.service;
 
-import com.saferent.domain.ContactMessage;
-import com.saferent.exception.ResourceNotFoundException;
-import com.saferent.exception.message.ErrorMessage;
-import com.saferent.repository.ContactMessageRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.saferent.domain.*;
+import com.saferent.exception.*;
+import com.saferent.exception.message.*;
+import com.saferent.repository.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ContactMessageService {
@@ -26,7 +25,7 @@ public class ContactMessageService {
 
     public List<ContactMessage> getAll() {
 
-        return  contactMessageRepository.findAll();
+        return contactMessageRepository.findAll();
     }
 
     public Page<ContactMessage> getAll(Pageable pageable){
@@ -36,12 +35,12 @@ public class ContactMessageService {
     public ContactMessage getContactMessage(Long id) {
 
         return contactMessageRepository.findById(id).orElseThrow(()->
-           //     new ResourceNotFoundException("ContactMessage isn't found with id :" + id));
+                // new ResourceNotFoundException("ContactMessage isn't found with id :" + id) );
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_EXCEPTION, id))
         );
     }
 
-    public void deleteContactMessage(Long id){
+    public void deleteContactMessage(Long id) {
         ContactMessage contactMessage = getContactMessage(id);
         contactMessageRepository.delete(contactMessage);
     }
@@ -57,3 +56,19 @@ public class ContactMessageService {
         contactMessageRepository.save(foundContactMessage);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
